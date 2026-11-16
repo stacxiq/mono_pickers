@@ -1,0 +1,6 @@
+prototype/
+build/
+example/build/
+.idea/
+*.iml
+.dart_tool/

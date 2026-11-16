@@ -334,7 +334,12 @@ class _MonoAdjustableState extends State<MonoAdjustable> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.radius),
               border: Border.all(
-                color: _focused ? t.ink : const Color(0x00000000),
+                color:
+                    _focused &&
+                        FocusManager.instance.highlightMode ==
+                            FocusHighlightMode.traditional
+                    ? t.ink
+                    : const Color(0x00000000),
                 width: 2,
               ),
             ),

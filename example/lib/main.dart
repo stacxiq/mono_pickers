@@ -15,7 +15,11 @@ class GalleryApp extends StatefulWidget {
 }
 
 class _GalleryAppState extends State<GalleryApp> {
-  ThemeMode _mode = ThemeMode.system;
+  ThemeMode _mode = switch (Uri.base.queryParameters['theme']) {
+    'light' => ThemeMode.light,
+    'dark' => ThemeMode.dark,
+    _ => ThemeMode.system,
+  };
   MonoFeedback _feedback = MonoFeedback.none;
   bool _rtl = false;
 
@@ -110,7 +114,7 @@ String _dateLabel(DateTime d) =>
     '${_wd[d.weekday - 1]}, ${_monthsShort[d.month - 1]} ${d.day}';
 
 class _GalleryPageState extends State<GalleryPage> {
-  String _filter = 'all';
+  String _filter = Uri.base.queryParameters['filter'] ?? 'all';
 
   // Fitness · body
   double _kg = 72.5;
@@ -549,74 +553,88 @@ class _GalleryPageState extends State<GalleryPage> {
                 ],
               ),
               const SizedBox(height: 10),
-              LayoutBuilder(
-                builder: (context, c) => SizedBox(
-                  height: 14,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        top: 4,
-                        height: 6,
-                        child: Row(
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Column(
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, c) => SizedBox(
+                        height: 14,
+                        child: Stack(
+                          clipBehavior: Clip.none,
                           children: [
-                            for (final (f, o) in [
-                              (14, 0.14),
-                              (26, 0.55),
-                              (20, 0.14),
-                              (40, 0.14),
-                            ]) ...[
-                              Expanded(
-                                flex: f,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: t.ink.withValues(alpha: o),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              top: 4,
+                              height: 6,
+                              child: Row(
+                                children: [
+                                  for (final (f, o) in [
+                                    (14, 0.14),
+                                    (26, 0.55),
+                                    (20, 0.14),
+                                    (40, 0.14),
+                                  ]) ...[
+                                    Expanded(
+                                      flex: f,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: t.ink.withValues(alpha: o),
+                                          borderRadius: BorderRadius.circular(
+                                            3,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 3),
+                                  ],
+                                ],
+                              ),
+                            ),
+                            AnimatedPositioned(
+                              duration: const Duration(milliseconds: 500),
+                              curve: monoSpring,
+                              left:
+                                  ((bmi - 15) / 25).clamp(0.0, 1.0) *
+                                      c.maxWidth -
+                                  7,
+                              top: 0,
+                              child: Container(
+                                width: 14,
+                                height: 14,
+                                decoration: BoxDecoration(
+                                  color: t.surface,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: t.ink, width: 3),
                                 ),
                               ),
-                              const SizedBox(width: 3),
-                            ],
+                            ),
                           ],
                         ),
                       ),
-                      AnimatedPositioned(
-                        duration: const Duration(milliseconds: 500),
-                        curve: monoSpring,
-                        left:
-                            ((bmi - 15) / 25).clamp(0.0, 1.0) * c.maxWidth - 7,
-                        top: 0,
-                        child: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: t.surface,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: t.ink, width: 3),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  for (final (f, s) in [
-                    (14, '15'),
-                    (26, '18.5'),
-                    (20, '25'),
-                    (40, '30'),
-                  ])
-                    Expanded(
-                      flex: f,
-                      child: Text(s, style: t.text(size: 10, color: t.muted)),
                     ),
-                  Text('40', style: t.text(size: 10, color: t.muted)),
-                ],
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        for (final (f, s) in [
+                          (14, '15'),
+                          (26, '18.5'),
+                          (20, '25'),
+                          (40, '30'),
+                        ])
+                          Expanded(
+                            flex: f,
+                            child: Text(
+                              s,
+                              style: t.text(size: 10, color: t.muted),
+                            ),
+                          ),
+                        Text('40', style: t.text(size: 10, color: t.muted)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -861,9 +879,16 @@ class _GalleryPageState extends State<GalleryPage> {
                 onChanged: (v) => setState(() => _sets = v),
               ),
             ),
-            Text(
-              '×',
-              style: t.text(size: 30, weight: FontWeight.w300, color: t.muted),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: Text(
+                '×',
+                style: t.text(
+                  size: 30,
+                  weight: FontWeight.w300,
+                  color: t.muted,
+                ),
+              ),
             ),
             Expanded(
               child: MonoStepper(

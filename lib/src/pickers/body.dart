@@ -1164,11 +1164,13 @@ class _MonoBodyFatPickerState extends State<MonoBodyFatPicker>
                     weight: i == cur ? FontWeight.w600 : FontWeight.w400,
                     color: i == cur ? t.ink : t.muted,
                   ),
-                  child: Text(
-                    cats[i].label,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.clip,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      cats[i].label,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                    ),
                   ),
                 ),
               ),

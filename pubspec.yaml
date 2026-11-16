@@ -4,6 +4,13 @@ version: 0.1.0
 homepage: https://github.com/stacxiq/mono_pickers
 repository: https://github.com/stacxiq/mono_pickers
 issue_tracker: https://github.com/stacxiq/mono_pickers/issues
+screenshots:
+  - description: Fitness pickers - ruler, stadiometer, drum and body-fat silhouette (dark).
+    path: doc/fitness.jpg
+  - description: Shopping and checkout pickers (light).
+    path: doc/shopping.jpg
+  - description: Travel pickers - route swap, range calendar and guest counters (dark).
+    path: doc/travel.jpg
 topics: [picker, slider, ui, animation, widget]
 
 environment:

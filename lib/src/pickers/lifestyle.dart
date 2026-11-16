@@ -985,6 +985,7 @@ class _MonoMoodPickerState extends State<MonoMoodPicker>
                         top: 11,
                         height: 6,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             for (var i = 0; i < 4; i++) ...[
                               if (i > 0) const SizedBox(width: 3),
@@ -1013,27 +1014,43 @@ class _MonoMoodPickerState extends State<MonoMoodPicker>
           ),
         ),
         const SizedBox(height: 4),
-        Row(
-          children: [
-            for (var i = 0; i < 5; i++)
-              Expanded(
-                child: Text(
-                  widget.labels[i],
-                  textAlign: i == 0
-                      ? TextAlign.start
-                      : i == 4
-                      ? TextAlign.end
-                      : TextAlign.center,
-                  style: t.text(
-                    size: 11,
-                    weight: i == widget.value
-                        ? FontWeight.w600
-                        : FontWeight.w400,
-                    color: i == widget.value ? t.ink : t.muted,
-                  ),
-                ),
-              ),
-          ],
+        SizedBox(
+          height: 16,
+          child: LayoutBuilder(
+            builder: (context, c) {
+              final rtl = Directionality.of(context) == TextDirection.rtl;
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  for (var i = 0; i < 5; i++)
+                    Positioned(
+                      left: (rtl ? 1 - i / 4 : i / 4) * c.maxWidth,
+                      top: 0,
+                      child: FractionalTranslation(
+                        translation: Offset(
+                          i == 0
+                              ? (rtl ? -1 : 0)
+                              : i == 4
+                              ? (rtl ? 0 : -1)
+                              : -0.5,
+                          0,
+                        ),
+                        child: Text(
+                          widget.labels[i],
+                          style: t.text(
+                            size: 11,
+                            weight: i == widget.value
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                            color: i == widget.value ? t.ink : t.muted,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
         ),
       ],
     );

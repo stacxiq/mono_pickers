@@ -1,8 +1,8 @@
 ## 0.1.1
 
 - Shorten the package description to fit pub.dev's 180-character limit.
-
 - Silence the `package:flutter/material.dart` deprecation reported by newer analyzers, keeping support for older Flutter versions.
+
 ## 0.1.0
 
 - Initial release: 31 animated, monochrome pickers.

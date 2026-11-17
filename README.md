@@ -30,7 +30,7 @@
 
 ```yaml
 dependencies:
-  mono_pickers: ^0.1.0
+  mono_pickers: ^0.1.1
 ```
 
 ## Usage

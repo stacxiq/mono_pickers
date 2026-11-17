@@ -1,6 +1,6 @@
 name: mono_pickers
-description: 31 animated, monochrome Flutter pickers for fitness, shopping, checkout, travel, tickets, booking, smart home, feedback and habit apps. Rulers, drums, dials, calendars, seats and more.
-version: 0.1.0
+description: "31 animated, monochrome Flutter pickers: rulers, drums, dials, calendars, seats, steppers and more for fitness, shopping, travel, booking and smart home apps."
+version: 0.1.1
 homepage: https://github.com/stacxiq/mono_pickers
 repository: https://github.com/stacxiq/mono_pickers
 issue_tracker: https://github.com/stacxiq/mono_pickers/issues

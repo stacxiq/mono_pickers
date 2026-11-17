@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/gestures.dart';
+// Material moved to package:material_ui in Flutter 3.47; keep this import so
+// the package still supports older Flutter versions.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 
 import '../core/controls.dart';
